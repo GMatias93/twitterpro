@@ -97,9 +97,9 @@ tweetBot.init = function(io, query) {
   twitterStream.destroy();
   twit.stream('statuses/filter', queryObj, function(stream) {
     twitterStream = stream;
-    console.log('--------------------');
-    console.log('Reconnected to twitter');
-    console.log('--------------------');
+    console.log('------------------------');
+    console.log('-Reconnected to twitter-');
+    console.log('------------------------');
     stream.on('data', function(tweet) {
       var msg = {};
       msg.text = tweet.text;

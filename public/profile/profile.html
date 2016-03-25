@@ -32,14 +32,23 @@
 
         <!-- targets -->
       <div class="card card-block" ng-show='toggle === 1'>
-        <h4 class="card-title">Targets for {{activeList.name}}</h4>
+        <h4 class="card-title">Targets for {{activeList}}</h4>
         <ul class="list-group scroll-list">
           <li class="target-item list-group-item" ng-repeat="targetEl in target track by $index">
+          <div ng-click="viewTargetProfile($index)">
             <p class="target-handle"><b>Handle: </b>{{targetEl.handle}}</p>
             <p class="target-interval"><b>Interval: </b>{{targetEl.interval}}</p>
             <img class="cancel-icon" src="./libs/xIcon.png" ng-click="deleteModel('target', $index)">
+          </div>
           </li>
+          <!-- activeTarget profile -->
         </ul>
+          <div ng-model="activeTarget">
+            <h4>{{activeTarget.name}}</h4>
+            <img class="target-image" ng-src={{activeTarget.profile_image_url_https}}>
+            <span class="target-last-tweet"><b>Last Tweet:</b> <em>{{activeTarget.status.text}}</em></span>
+
+          </div>
 
         <!-- dropdown/buttons/inputs -->
         <p class="card-text"></p>
@@ -173,7 +182,7 @@
 
       <!-- messages -->
       <div class="card card-block messages" ng-show='toggle === 2'>
-        <h4 class="card-title">Messages</h4>
+        <h4 class="card-title">Messages for {{activeList}}</h4>
         <ul class="list-group scroll-list">
           <li class="list-group-item" ng-repeat="messageEl in message track by $index">
             <span>{{messageEl.text}}</span>
@@ -193,7 +202,7 @@
 
       <!-- hashtags -->
       <div class="card card-block" ng-show='toggle === 3'>
-        <h4 class="card-title">Hashtags</h4>
+        <h4 class="card-title">Hashtags for {{activeList}}</h4>
         <ul class="list-group scroll-list">
           <li class="list-group-item" ng-repeat="hashtagEl in hashtag track by $index">
             <span>{{hashtagEl.text}}</span>

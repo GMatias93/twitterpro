@@ -4,6 +4,7 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
   $scope.user = {};
   $scope.toggle = 0;
   $scope.showTargetState = false;
+  $scope.activeTarget;
   console.log('in profileCtrl');
 
 
@@ -89,12 +90,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
     console.log('scope list [0]: ', $scope.list[0]);
     $scope.changeList($scope.list[0].name);
   });
-  // set the first list as the active list
-  // get the mes
-
-  // functions for creating models
-  // callback called after adding a member;
-
   // targets
   $scope.addTarget = function(newTarget) {
     $scope.newTarget = "";
@@ -164,7 +159,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
     $event.preventDefault();
     $event.stopPropagation();
     $scope.status.isopen = !$scope.status.isopen;
-
   };
 
   $scope.deleteModel = function(type, $index) {
@@ -185,5 +179,12 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
 
   $scope.userChangeList = function(i) {
     $scope.changeList($scope.list[i].name);
+  };
+  $scope.viewTargetProfile = function(i) {
+    var user = $scope.target[i];
+    tweetFactory.getUserObj(user.handle, function(result) {
+      $scope.activeTarget = result;
+      console.log(result);
+    });
   };
 }, ]);

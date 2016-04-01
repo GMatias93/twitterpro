@@ -45,4 +45,8 @@ angular.module('app', [
 .run(function($rootScope) {
   console.log($rootScope.hashTagData);
   $rootScope.hashTagKeys, $rootScope.hashTagValues;
+})
+
+.constant('Server', {
+  url: '//localhost:3000/api/models/'
 });

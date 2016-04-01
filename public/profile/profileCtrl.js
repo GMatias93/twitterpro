@@ -65,27 +65,27 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
       }
     });
   };
-   $scope.changeList = function (list) {
+  $scope.changeList = function(list) {
     console.log('profileCTRL: changeList ', list);
     $scope.activeList = list;
     $scope.target = [];
     $scope.message = [];
     $scope.hashtag = [];
-    dbFactory.getModel('target', '/list/' + list, function(results){
+    dbFactory.getModel('target', '/list/' + list, function(results) {
       $scope.target = results;
       console.log('change list got targets: ', results);
     });
-    dbFactory.getModel('message', '/list/' + list, function(results){
+    dbFactory.getModel('message', '/list/' + list, function(results) {
       $scope.message = results;
       console.log('change list got messages: ', results);
     });
-    dbFactory.getModel('hashtag', '/list/' + list, function(results){
+    dbFactory.getModel('hashtag', '/list/' + list, function(results) {
       $scope.hashtag = results;
       console.log('change list got hashtags: ', results);
     });
   };
   // get all lists
-  $scope.fetchLists(function () {
+  $scope.fetchLists(function() {
     console.log('scope list [0]: ', $scope.list[0]);
     $scope.changeList($scope.list[0].name);
   });
@@ -183,7 +183,7 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
 
   $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
 
-  $scope.userChangeList = function (i) {
+  $scope.userChangeList = function(i) {
     $scope.changeList($scope.list[i].name);
-  }; 
+  };
 }, ]);

@@ -9,9 +9,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Connected error"));
 
 db.once('open', function() {
-
   console.log("we're connected port:3000");
-
 });
 
 var UserSchema = mongoose.Schema({

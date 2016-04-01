@@ -38,7 +38,7 @@
           <div ng-click="viewTargetProfile($index)">
             <p class="target-handle"><b>Handle: </b>{{targetEl.handle}}</p>
             <p class="target-interval"><b>Interval: </b>{{targetEl.interval}}</p>
-            <img class="cancel-icon" src="./libs/xIcon.png" ng-click="deleteModel('target', $index)">
+            <img class="cancel-icon" src="./libs/xIcon.png" ng-click="deleteModel('target', $index); $event.stopPropagation()">
           </div>
           </li>
           <!-- activeTarget profile -->

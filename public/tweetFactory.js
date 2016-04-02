@@ -1,11 +1,11 @@
 angular.module('tweet.factory', [])
 
-.factory('tweetFactory', ['$http', '$rootScope', function($http, $rootScope) {
+  .factory('tweetFactory', ['$http', 'Server', '$rootScope', function($http, Server, $rootScope) {
   var factory = {};
 
   factory.getUserObj = function(handle, callback) {
     console.log('getting info for handle: ', handle);
-    $http.post('//localhost:3000/userObj', {
+    $http.post(Server.url + 'userObj', {
       handle: handle
     }).then(function(user) {
       console.log('got back this user', user);
@@ -15,14 +15,14 @@ angular.module('tweet.factory', [])
 
   factory.getMyTweets = function() {
     console.log('getting my tweets');
-    $http.get('//localhost:3000/myTweets')
+    $http.get(Server.url + 'myTweets')
       .then(function(err, data) {
         console.log('err', err, 'data', data);
       });
   };
 
 
-  var socket = io.connect('//localhost:3000');
+  var socket = io.connect(Server.url);
   factory.stream = {
     on: function(eventName, callback) {
       socket.on(eventName, function() {

@@ -1,13 +1,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var passport = require('passport');
 var schedule = require('node-schedule');
 
-// twitter bot 
+// twitter bot
 var tweetBot = require('./twitter.js');
 
 // database
 var db = require('./db.js');
+
+//API keys and passport configuration
+var passportConfig = require('./config/passport.js');
 
 // server config
 var port = process.env.PORT || 3000;
@@ -58,9 +62,9 @@ app.put('/api/models/:model', function(req, res) {
 //
 // twitter
 //
-app.get('/twitter/statuses/show/:id', function (req, res) {
+app.get('/twitter/statuses/show/:id', function(req, res) {
   console.log("SERVER: get /twitter/statuses/" + req.params.id);
-  tweetBot.getTweetById(req.params.id, function (results){
+  tweetBot.getTweetById(req.params.id, function(results) {
     console.log('SERVER: tweet fetched');
     res.status(200).send(results);
   });

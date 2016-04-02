@@ -48,5 +48,5 @@ angular.module('app', [
 })
 
 .constant('Server', {
-  url: '//localhost:3000/api/models/'
+  url: '//localhost:3000/'
 });

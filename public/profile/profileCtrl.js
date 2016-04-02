@@ -5,7 +5,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
   $scope.toggle = 0;
   $scope.showTargetState = false;
   $scope.activeTarget;
-  console.log('in profileCtrl');
 
 
   // load "users" profile
@@ -16,7 +15,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
   // create and invoke functions to refresh $scope from db;
   // get data and save to scope
   $scope.cronHandler = function(cronType, value) {
-    console.log(cronType, value);
     $scope.userCron[cronType] = value;
   };
 
@@ -34,7 +32,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
     }
 
     result = result.substring(0, result.length - 1);
-    console.log(result);
     return result;
   };
 
@@ -42,7 +39,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
   $scope.fetchTargets = function() {
     dbFactory.getModel('target', '/list/' + $scope.activeList, function(results) {
       $scope.target = results;
-      console.log('results from fetching all targets: ', results);
     });
   };
   // messages
@@ -67,27 +63,22 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
     });
   };
   $scope.changeList = function(list) {
-    console.log('profileCTRL: changeList ', list);
     $scope.activeList = list;
     $scope.target = [];
     $scope.message = [];
     $scope.hashtag = [];
     dbFactory.getModel('target', '/list/' + list, function(results) {
       $scope.target = results;
-      console.log('change list got targets: ', results);
     });
     dbFactory.getModel('message', '/list/' + list, function(results) {
       $scope.message = results;
-      console.log('change list got messages: ', results);
     });
     dbFactory.getModel('hashtag', '/list/' + list, function(results) {
       $scope.hashtag = results;
-      console.log('change list got hashtags: ', results);
     });
   };
   // get all lists
   $scope.fetchLists(function() {
-    console.log('scope list [0]: ', $scope.list[0]);
     $scope.changeList($scope.list[0].name);
   });
   // targets
@@ -111,7 +102,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
   // list
   $scope.addList = function(list) {
     $scope.newList = "";
-    console.log(list);
     dbFactory.createModel('list', list, function(results) {
       $scope.fetchLists();
     });
@@ -162,12 +152,7 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
   };
 
   $scope.deleteModel = function(type, $index) {
-    console.log('$index', $index);
-    console.log('type', type);
-    console.log($scope[type][$index]);
-    console.log('/api/models/' + type + '/_id/' + $scope[type][$index]['_id']);
     dbFactory.deleteModel(type, '/_id/' + $scope[type][$index]['_id'], function(results) {
-      console.log('model deleted');
       $scope.fetchTargets();
       $scope.fetchMessages();
       $scope.fetchHashtags();
@@ -184,7 +169,6 @@ angular.module('profile.ctrl', ['db.factory', 'tweet.factory'])
     var user = $scope.target[i];
     tweetFactory.getUserObj(user.handle, function(result) {
       $scope.activeTarget = result;
-      console.log(result);
     });
   };
 }, ]);

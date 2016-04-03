@@ -23,6 +23,8 @@ var app = express();
 // middleware
 app.use(express.static(__dirname + './../public'));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //subrouters
 // app.use('/api', require('./routers/apiRoutes.js'));

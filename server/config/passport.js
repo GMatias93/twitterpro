@@ -37,26 +37,38 @@ passport.use(new TwitterStrategy({
   passReqToCallback: true
 }, function(req, accessToken, tokenSecret, profile, done) {
   if (req.user) {
-    User.findOne({ twitter: profile.id }, function(err, existingUser) {
+    User.findOne({
+      twitter: profile.id
+    }, function(err, existingUser) {
       if (existingUser) {
-        req.flash('errors', { msg: 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
+        req.flash('errors', {
+          msg: 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
+        });
         done(err);
       } else {
         User.findById(req.user.id, function(err, user) {
           user.twitter = profile.id;
-          user.tokens.push({ kind: 'twitter', accessToken: accessToken, tokenSecret: tokenSecret });
+          user.tokens.push({
+            kind: 'twitter',
+            accessToken: accessToken,
+            tokenSecret: tokenSecret
+          });
           user.profile.name = user.profile.name || profile.displayName;
           user.profile.location = user.profile.location || profile._json.location;
           user.profile.picture = user.profile.picture || profile._json.profile_image_url_https;
           user.save(function(err) {
-            req.flash('info', { msg: 'Twitter account has been linked.' });
+            req.flash('info', {
+              msg: 'Twitter account has been linked.'
+            });
             done(err, user);
           });
         });
       }
     });
   } else {
-    User.findOne({ twitter: profile.id }, function(err, existingUser) {
+    User.findOne({
+      twitter: profile.id
+    }, function(err, existingUser) {
       if (existingUser) {
         return done(null, existingUser);
       }
@@ -66,7 +78,11 @@ passport.use(new TwitterStrategy({
       // so we can "fake" a twitter email address as follows:
       user.email = profile.username + "@twitter.com";
       user.twitter = profile.id;
-      user.tokens.push({ kind: 'twitter', accessToken: accessToken, tokenSecret: tokenSecret });
+      user.tokens.push({
+        kind: 'twitter',
+        accessToken: accessToken,
+        tokenSecret: tokenSecret
+      });
       user.profile.name = profile.displayName;
       user.profile.location = profile._json.location;
       user.profile.picture = profile._json.profile_image_url_https;
@@ -78,7 +94,7 @@ passport.use(new TwitterStrategy({
 }));
 
 exports.isAuthenticated = function(req, res, next) {
-  if(req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     return next();
   }
   res.redirect('/login');
@@ -87,7 +103,9 @@ exports.isAuthenticated = function(req, res, next) {
 exports.isAuthorized = function(req, res, next) {
   var provider = req.path.split('/').slice(-1)[0];
 
-  if (_.find(req.user.tokens, { kind: provider })) {
+  if (_.find(req.user.tokens, {
+      kind: provider
+    })) {
     next();
   } else {
     res.redirect('/auth/' + provider);

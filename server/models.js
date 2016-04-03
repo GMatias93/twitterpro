@@ -1,16 +1,19 @@
 var mongoose = require('mongoose');
 
 var UserSchema = mongoose.Schema({
-  username: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
+  email: { type: String, unique: true },
   password: String,
-  twitterId: String,
-  admin: Number,
-});
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  twitter: String,
+  profile: {
+    name: { typ: String, default: '' },
+    gender: { type: String, default: '' },
+    location: { type: String, default: '' },
+    website: { type: String, default: '' },
+    picture: { type: String, default: '' }
+  }
+}, { timestamps: true });
 
 var ListSchema = mongoose.Schema({
   name: {
